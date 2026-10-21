@@ -1,0 +1,40 @@
+# secrets
+.env
+*.env
+!.env.example
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# wazuh all in one installer output (contains every generated password)
+wazuh-install-files.tar
+wazuh-passwords.txt
+
+# opnsense: commit sanitized excerpts only, never the full export
+config.xml
+config-*.xml
+*.xml.bak
+
+# captures and raw exports (large, and full of real addresses)
+*.pcap
+*.pcapng
+*.evtx
+raw/
+exports/
+
+# proxmox backups and disk images
+*.vma
+*.vma.zst
+*.qcow2
+*.iso
+
+# editor and os noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

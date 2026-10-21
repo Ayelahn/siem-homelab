@@ -1,0 +1,31 @@
+title = "siem-homelab"
+
+# keep all of gitleaks' built in rules, then add lab specific ones
+[extend]
+useDefault = true
+
+[[rules]]
+id = "tailscale-key"
+description = "Tailscale auth or API key"
+regex = '''tskey-[a-z]+-[0-9A-Za-z]+(?:-[0-9A-Za-z]+)?'''
+keywords = ["tskey"]
+
+[[rules]]
+id = "ntfy-topic-or-token"
+description = "ntfy topic or token with a real value. Keep these in .env"
+regex = '''(?i)ntfy_(?:topic|token)\s*[=:]\s*["']?([A-Za-z0-9_\-]{6,})'''
+secretGroup = 1
+keywords = ["ntfy_topic", "ntfy_token"]
+[rules.allowlist]
+regexes = ['''REPLACE_ME''']
+
+[[rules]]
+id = "unredacted-mac"
+description = "Real MAC address. Redact to the documentation range 00:00:5e:00:53:xx (RFC 7042) before committing"
+regex = '''\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b'''
+[rules.allowlist]
+regexes = [
+  '''(?i)00[:-]00[:-]5e[:-]00[:-]53[:-][0-9a-f]{2}''',
+  '''(?i)ff[:-]ff[:-]ff[:-]ff[:-]ff[:-]ff''',
+  '''00[:-]00[:-]00[:-]00[:-]00[:-]00''',
+]
